@@ -47,7 +47,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Bind an InstantCommand that calls the doSomething method of our subsystem when button A is pressed.
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> imu.reset(), imuSubsystem));
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> imu.reset()));
   }
 
   /**

@@ -32,6 +32,7 @@ public class PigeonIMU implements IMU
 
     @Override
     public void reset() {
+        System.out.println("Resetting PigeonIMU");
         imu.setFusedHeading(0.0);
     }
 
