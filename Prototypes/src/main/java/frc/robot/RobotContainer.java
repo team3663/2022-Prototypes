@@ -3,14 +3,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import org.frcteam3663.PigeonIMU;
+
 import static frc.robot.Constants.*;
 
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IMUTestSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,12 +24,13 @@ public class RobotContainer {
 
   //
   private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
+  private final PigeonIMU imu = new PigeonIMU(PIGEON_CAN_ID);
 
   // Subsystems
-  private final ExampleSubsystem mySubsystem = new ExampleSubsystem();
+  private final IMUTestSubsystem imuSubsystem = new IMUTestSubsystem(imu);
 
   // Commands
-  private final ExampleCommand autoCmd = new ExampleCommand(mySubsystem);
+  //private final ExampleCommand autoCmd = new ExampleCommand(mySubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -44,7 +47,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Bind an InstantCommand that calls the doSomething method of our subsystem when button A is pressed.
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> mySubsystem.doSomething(), mySubsystem));
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> imu.reset(), imuSubsystem));
   }
 
   /**
@@ -54,6 +57,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return autoCmd;
+    return null;
   }
 }
