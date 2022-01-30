@@ -10,29 +10,36 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import static frc.robot.Constants.*;
-
 public class ShooterSubsystem extends SubsystemBase {
 
-  private CANSparkMax motor1 = new CANSparkMax(SHOOTER_1_CAN_ID, MotorType.kBrushless);
-  private CANSparkMax motor2 = new CANSparkMax(SHOOTER_2_CAN_ID, MotorType.kBrushless);
-  private MotorControllerGroup motorGroup = new MotorControllerGroup(motor1, motor2);
-  private RelativeEncoder encoder1 = motor1.getEncoder();
+  private CANSparkMax motor1;
+  private CANSparkMax motor2;
+  private MotorControllerGroup motorGroup;
+  private RelativeEncoder encoder1;
+  private boolean running = false;
+  private double power = 0.0;
 
-  boolean running = false;
-  double power = 0.0;
+  //Network tables for Shuffleboard telemetry
+  private NetworkTableEntry runningEntry;
+  private NetworkTableEntry powerEntry;
+  private NetworkTableEntry rpmEntry;
 
-  static final double powerIncrement = 0.05;
+   static final double powerIncrement = 0.05; 
 
-    //Network tables for telemetry
-    private NetworkTableEntry runningEntry;
-    private NetworkTableEntry powerEntry;
-    private NetworkTableEntry rpmEntry;
+  /** Creates a new instance of the Shooter subsystem. */
+  public ShooterSubsystem(int motor1CANId, int motor2CANId) {
 
-  /** Creates a new ExampleSubsystem. */
-  public ShooterSubsystem() {
+    motor1 = new CANSparkMax(motor1CANId, MotorType.kBrushless);
+    motor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
+    motorGroup = new MotorControllerGroup(motor1, motor2);
+    encoder1 = motor1.getEncoder();
+
+    // The motors in the shooter run in opposition to each other by default
+    // invert one of them to fix this and initialize power to zero.
+    motor1.setInverted(true);
     motorGroup.set(power);
 
+    // Setup the Shuffleboard widgets to dislay info about the state of the shooter.
     ShuffleboardTab shooterTab = Shuffleboard.getTab("Shooter");
     runningEntry = shooterTab.add("Running", false)
       .withPosition(0, 0)
@@ -46,7 +53,6 @@ public class ShooterSubsystem extends SubsystemBase {
       .withPosition(2, 0)
       .withSize(1, 1)
       .getEntry();
-
   }
 
   @Override

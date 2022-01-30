@@ -23,7 +23,7 @@ public class RobotContainer {
   private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
 
   // Subsystems
-  private final ShooterSubsystem shooter = new ShooterSubsystem();
+  private final ShooterSubsystem shooter = new ShooterSubsystem(SHOOTER_1_CAN_ID, SHOOTER_2_CAN_ID);
 
   // Commands
 
