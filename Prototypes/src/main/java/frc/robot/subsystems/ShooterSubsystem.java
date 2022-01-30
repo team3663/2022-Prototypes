@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
       .withSize(1, 1)
       .getEntry();
     powerEntry = shooterTab.add("Current Power", 0.0)
-      .withPosition(1, 1)
+      .withPosition(1, 0)
       .withSize(1, 1)
       .getEntry();
     rpmEntry = shooterTab.add("Current RPM", 0.0)
