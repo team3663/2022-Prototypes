@@ -4,11 +4,7 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SS_Shooter;
@@ -16,15 +12,15 @@ import frc.robot.subsystems.SS_Shooter;
 
 public class C_Shoot extends CommandBase {
   /** Creates a new C_Shoot. */
-  //private CANSparkMax leftMotor = new CANSparkMax(Constants.SHOOTER_CAN_LEFT, MotorType.kBrushless);
-  private SS_Shooter shooter = SS_Shooter.getInstance();
   private static final XboxController driveController = new XboxController(Constants.DRIVE_CONTROLLER_ID);
 
-  private double speed = 0;
-  
-  public C_Shoot() {
+  private SS_Shooter shooter;
+
+  public double speed = 0;
+
+  public C_Shoot(SS_Shooter shooter) {
+    this.shooter = shooter;
     addRequirements(shooter);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -47,14 +43,11 @@ public class C_Shoot extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //shooter.setSpeed(0);
-  }
+  public void end(boolean interrupted) { }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //return (driveController.getLeftTriggerAxis() == 0);
     return false;
   }
 }

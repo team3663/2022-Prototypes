@@ -14,10 +14,18 @@ package frc.robot;
  */
 public final class Constants {
 
+    //XBOXCONTROLLER CONSTANTS
     public static final int DRIVE_CONTROLLER_ID = 0;
 
+    //SHOOTER CONSTANTS
     public static final int SHOOTER_CAN_LEFT = 2;
     public static final int SHOOTER_CAN_RIGHT = 3;
 
+    //DRIVER CONSTANTS
+    public static final int LEFT_DRIVE = 3;
+    public static final int RIGHT_DRIVE = 4;
+    public static final int TEST_DRIVE = 15;
+
+    //FEEDER CONSTANTS
     public static final int FEEDER_CAN = 19029;
 }

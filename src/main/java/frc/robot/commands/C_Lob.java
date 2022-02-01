@@ -12,13 +12,14 @@ import frc.robot.subsystems.SS_Shooter;
 
 public class C_Lob extends CommandBase {
   /** Creates a new C_Lob. */
-  private SS_Shooter shooter = SS_Shooter.getInstance();
-
   private static final XboxController driveController = new XboxController(Constants.DRIVE_CONTROLLER_ID);
+
+  private SS_Shooter shooter;
   
-  public C_Lob() {
-    addRequirements(shooter);
+  public C_Lob(SS_Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.shooter = shooter;
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.

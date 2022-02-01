@@ -5,16 +5,15 @@
 // package frc.robot.commands;
 
 // import edu.wpi.first.wpilibj2.command.CommandBase;
-// import frc.robot.subsystems.SS_Feeder;
+// import frc.robot.subsystems.SS_TankDrive;
 
-// public class C_Feeder extends CommandBase {
-//   /** Creates a new C_Feeder. */
-//   private SS_Feeder feeder;
-
-//   public C_Feeder(SS_Feeder feeder) {
+// public class C_AutoAlign extends CommandBase {
+//   private SS_TankDrive driveBase;
+//   /** Creates a new C_AutoAlign. */
+//   public C_AutoAlign(SS_TankDrive driveBase) {
 //     // Use addRequirements() here to declare subsystem dependencies.
-//     this.feeder = feeder;
-//     addRequirements(feeder);
+//     this.driveBase = driveBase;
+//     addRequirements(driveBase);
 //   }
 
 //   // Called when the command is initially scheduled.
@@ -23,9 +22,7 @@
 
 //   // Called every time the scheduler runs while the command is scheduled.
 //   @Override
-//   public void execute() {
-//     feeder.setSpeed(0.2);
-//   }
+//   public void execute() {}
 
 //   // Called once the command ends or is interrupted.
 //   @Override
