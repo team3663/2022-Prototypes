@@ -1,7 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick.ButtonType;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -9,8 +11,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
 
+import frc.robot.commands.C_AutoAlign;
+import frc.robot.commands.C_Drive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SS_TankDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,6 +26,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class RobotContainer {
 
   //
+  private SS_TankDrive driveBase = new SS_TankDrive();
   private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
 
   // Subsystems
@@ -28,10 +34,16 @@ public class RobotContainer {
 
   // Commands
   private final ExampleCommand autoCmd = new ExampleCommand(mySubsystem);
+  private final C_AutoAlign align = new C_AutoAlign(driveBase);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    Command cmd = new C_Drive(driveBase, 
+                          () -> controller.getRawAxis(Constants.L_Y_AXIS), 
+                          () -> controller.getRawAxis(Constants.R_X_AXIS));
+    driveBase.setDefaultCommand(cmd);
+
     configureButtonBindings();
   }
 
@@ -42,9 +54,15 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //new edu.wpi.first.wpilibj2.command.button.Button().whenPressed(align);
 
     // Bind an InstantCommand that calls the doSomething method of our subsystem when button A is pressed.
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> mySubsystem.doSomething(), mySubsystem));
+    //new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> mySubsystem.doSomething(), mySubsystem));
+
+    new JoystickButton(controller, Button.kA.value)
+            .whileHeld(new C_AutoAlign(driveBase), false);
+          // .whenHeld(new InstantCommand(() -> new C_AutoAlign(driveBase)), true);
+    // .whenPressed(new InstantCommand(() -> new C_AutoAlign(driveBase)));
   }
 
   /**

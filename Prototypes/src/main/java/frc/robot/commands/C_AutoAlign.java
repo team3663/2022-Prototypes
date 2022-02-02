@@ -20,15 +20,22 @@ public class C_AutoAlign extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() { 
-    if(!vision.getValidTarget()){
-      driveBase.setPower("left", 0.2);
+  public void initialize() {
+    System.out.println("C_AutoAlign started.");
     }
-  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //System.out.println("----------------------!vision.getValidTarget(): " + !vision.getValidTarget());
+    // if(vision == null && !vision.getValidTarget()){
+       //driveBase.setPower("left", 0.2);
+      //driveBase.arcadeDrive(0., -.2);
+    // }
+    // if(!vision.getValidTarget()){
+    //   driveBase.setPower("left", 0.2);
+    // }
+    //driveBase.setPower("left", 0.2);
     //while not horozontal turn right if xoffset is < 27 && > 0 else turn left
     //while not vertical back up if yoffset is < 20.5 && > 0 else drive foreward
     if(vision.getValidTarget()){
@@ -42,7 +49,9 @@ public class C_AutoAlign extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("C_AutoAlign ended.");
+  }
 
   // Returns true when the command should end.
   @Override

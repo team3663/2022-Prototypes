@@ -4,27 +4,36 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
+import java.util.function.Supplier;
+
+import javax.swing.plaf.synth.SynthToolBarUI;
+
+// import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SS_TankDrive;
 
 public class C_Drive extends CommandBase {
-  /** Creates a new C_Drive. */
-  private SS_TankDrive driveBase;
 
-  private static final XboxController driveController = new XboxController(0);
+  private final SS_TankDrive driveBase;
   
-  /** Creates a new C_FTC. */
-  public C_Drive( SS_TankDrive driveBase) {
-    this.driveBase = driveBase;
+  private Supplier<Double> leftYAxisSpeedSupplier;
+  private Supplier<Double> rightZAxisRotateSupplier;
 
+  public C_Drive(SS_TankDrive driveBase,
+                Supplier<Double> leftYAxisSpeedSupplier,
+                Supplier<Double> rightZAxisRotateSupplier) {
+    this.driveBase = driveBase;
+    this.leftYAxisSpeedSupplier = leftYAxisSpeedSupplier;
+    this.rightZAxisRotateSupplier = rightZAxisRotateSupplier;
     addRequirements(driveBase);
   
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("C_Drive started.");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -32,12 +41,15 @@ public class C_Drive extends CommandBase {
     // if(driveController.getYButtonPressed()){
     //   ss_TankDrive.setPower(0.2, 0.2);
     // }
-    driveBase.setPower(0.2);
+    // driveBase.setPower(0.2, 0.2);
+    driveBase.arcadeDrive(leftYAxisSpeedSupplier.get(), rightZAxisRotateSupplier.get());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("C_Drive ended.");
+  }
 
   // Returns true when the command should end.
   @Override

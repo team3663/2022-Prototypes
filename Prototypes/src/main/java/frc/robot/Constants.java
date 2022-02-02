@@ -16,11 +16,18 @@ public final class Constants {
     public static final int TEST_CONTROLLER_ID = 2;
 
     // CAN IDs for our motor controllers
-<<<<<<< Updated upstream
-    public static final int MOTOR_A_CAN_ID = 1;
-    public static final int MOTOR_B_CAN_ID = 2;
-=======
     public static final int SHOOTER_1_CAN_ID = 2;
     public static final int SHOOTER_2_CAN_ID = 3;
->>>>>>> Stashed changes
+
+    // CAN IDs for our drivebase controllers
+    public static final int LEFT_DRIVE = 3;
+    public static final int RIGHT_DRIVE = 4;
+
+    // More xbox controller constants
+    public static final int L_X_AXIS = 0;
+    public static final int L_Y_AXIS = 1;
+    public static final int L_TRIGGER = 2;
+    public static final int R_TRIGGER = 3;
+    public static final int R_X_AXIS = 4;
+    public static final int R_Y_AXIS = 5;
 }
