@@ -12,7 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class IntakeSubsystem extends SubsystemBase {
 
   private CANSparkMax intakeMotor;
-  private double power = 0.3;
+  private double power = 0.4;
   final DoubleSolenoid intakeSolenoid;
   private boolean isOut;
 
@@ -23,7 +23,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.SOLONOID_INWARD_CAN_ID, Constants.SOLONOID_OUTWARD_CAN_ID);
 
-    //intakeMotor.setInverted(true); // ------------------- might need this
+    //intakeMotor.setInverted(true); // ------------------- might need this find out later
   }
 
   @Override
