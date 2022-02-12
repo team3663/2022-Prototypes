@@ -8,10 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
-
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-
+import frc.robot.subsystems.FeederSubsystem;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -20,17 +17,21 @@ import frc.robot.subsystems.ExampleSubsystem;
  */
 public class RobotContainer {
 
-  //
-  private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
+  private final XboxController controller;
 
   // Subsystems
-  private final ExampleSubsystem mySubsystem = new ExampleSubsystem();
-
+  private final FeederSubsystem feeder;
+  
   // Commands
-  private final ExampleCommand autoCmd = new ExampleCommand(mySubsystem);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    controller = new XboxController(DRIVE_CONTROLLER_ID);
+
+    feeder = new FeederSubsystem(FEEDER_MOTOR_1_CAN_ID, FEEDER_MOTOR_2_CAN_ID);
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -42,9 +43,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
-    // Bind an InstantCommand that calls the doSomething method of our subsystem when button A is pressed.
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> mySubsystem.doSomething(), mySubsystem));
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> feeder.moveBallToPrechamberFromIntake(), feeder));
+    new JoystickButton(controller, Button.kB.value).whenPressed(new InstantCommand(() -> feeder.moveBallToChamber(), feeder));
+    new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> feeder.moveBallToPrechamberFromChamber(), feeder));
+    new JoystickButton(controller, Button.kY.value).whenPressed(new InstantCommand(() -> feeder.moveBallToIntake(), feeder));
   }
 
   /**
@@ -54,6 +56,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return autoCmd;
+    return null;
   }
 }
