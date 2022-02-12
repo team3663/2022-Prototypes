@@ -43,9 +43,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook1In(), climber));
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook1Out(), climber));
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook2In(), climber));
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook2Out(), climber));
+    new JoystickButton(controller, Button.kB.value).whenPressed(new InstantCommand(() -> climber.spinHook1Out(), climber));
+    new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> climber.spinHook2In(), climber));
+    new JoystickButton(controller, Button.kY.value).whenPressed(new InstantCommand(() -> climber.spinHook2Out(), climber));
     
     new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmill(), climber));
     new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmillInverse(), climber));
