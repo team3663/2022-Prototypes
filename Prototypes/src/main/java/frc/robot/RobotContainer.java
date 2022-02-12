@@ -8,10 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
-
-import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
-
-import frc.robot.imput.DPadButton;
+import frc.robot.input.DPadButton;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -24,19 +21,25 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
 
-  //
-  private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
+  private final XboxController controller;
 
   // Subsystems
-  private final IntakeSubsystem intake = new IntakeSubsystem(INTAKE_CAN_ID);
-  private final ShooterSubsystem shooter = new ShooterSubsystem(SHOOTER_1_CAN_ID, SHOOTER_2_CAN_ID);
-  private final FeederSubsystem feeder = new FeederSubsystem(FEEDER_1_CAN_ID, FEEDER_2_CAN_ID);
+  private final IntakeSubsystem intake;
+  private final ShooterSubsystem shooter;
+  private final FeederSubsystem feeder;
   
   // Commands
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    controller = new XboxController(DRIVE_CONTROLLER_ID);
+
+    intake = new IntakeSubsystem(INTAKE_MOTOR_CAN_ID, INTAKE_IN_SOLENOID_CAN_ID, INTAKE_OUT_SOLENOID_CAN_ID);
+    shooter = new ShooterSubsystem(SHOOTER_MOTOR_1_CAN_ID, SHOOTER_MOTOR_2_CAN_ID);
+    feeder = new FeederSubsystem(FEEDER_MOTOR_1_CAN_ID, FEEDER_MOTOR_2_CAN_ID);
+
     // Configure the button bindings
     configureButtonBindings();
   }

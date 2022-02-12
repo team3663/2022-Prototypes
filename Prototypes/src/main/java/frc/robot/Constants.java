@@ -16,13 +16,13 @@ public final class Constants {
     public static final int TEST_CONTROLLER_ID = 2;
 
     // CAN IDs for our motor controllers
-    public static final int SHOOTER_1_CAN_ID = 1;
-    public static final int SHOOTER_2_CAN_ID = 2;
-    public static final int INTAKE_CAN_ID = 5;
-    public static final int FEEDER_1_CAN_ID = 32;
-    public static final int FEEDER_2_CAN_ID = 343;
+    public static final int SHOOTER_MOTOR_1_CAN_ID = 1;
+    public static final int SHOOTER_MOTOR_2_CAN_ID = 2;
+    public static final int INTAKE_MOTOR_CAN_ID = 3;
+    public static final int FEEDER_MOTOR_1_CAN_ID = 4;
+    public static final int FEEDER_MOTOR_2_CAN_ID = 5;
 
-    // CAN IDs for our solonoids
-    public static final int SOLONOID_OUTWARD_CAN_ID = 83;
-    public static final int SOLONOID_INWARD_CAN_ID = 82;
+    // CAN IDs for our pneumatic solenoids
+    public static final int INTAKE_OUT_SOLENOID_CAN_ID = 20;
+    public static final int INTAKE_IN_SOLENOID_CAN_ID = 21;
 }
