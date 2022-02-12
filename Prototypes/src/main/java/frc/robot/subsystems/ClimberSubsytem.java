@@ -26,17 +26,19 @@ public class ClimberSubsytem extends SubsystemBase {
 
     motor1.setInverted(true);
     motorGroup.set(0.0);
+    hookMotor1.set(0.0);
+    hookMotor2.set(0.0);
   }
 
   @Override
   public void periodic() {}
 
   public void spinWindmill() {
-    motorGroup.set(0.5);
+    motorGroup.set(0.4);
   }
 
   public void spinWindmillInverse() {
-    motorGroup.set(-0.5);
+    motorGroup.set(-0.4);
   }
 
   public void spinHook1Out(){
