@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
 
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ClimberSubsytem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,7 +23,7 @@ public class RobotContainer {
   private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
 
   // Subsystems
-  private final ShooterSubsystem shooter = new ShooterSubsystem(SHOOTER_1_CAN_ID, SHOOTER_2_CAN_ID);
+  private final ClimberSubsytem climber = new ClimberSubsytem(CLIMBER_1_CAN_ID, CLIMBER_2_CAN_ID, CLIMBER_3_CAN_ID, CLIMBER_4_CAN_ID);
 
   // Commands
 
@@ -42,10 +42,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> shooter.start(), shooter));
-    new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> shooter.stop(), shooter));
-    new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> shooter.decreasePower(), shooter));
-    new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> shooter.increasePower(), shooter));
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook1In(), climber));
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook1Out(), climber));
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook2In(), climber));
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook2Out(), climber));
+    
+    new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmill(), climber));
+    new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmillInverse(), climber));
   }
 
   /**
