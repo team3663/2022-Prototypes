@@ -17,7 +17,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private boolean isOut;
 
   /** Creates a new instance of the Shooter subsystem. */
-  public IntakeSubsystem(int motor1CANId, int motor2CANId) {
+  public IntakeSubsystem(int motor1CANId) {
 
     intakeMotor = new CANSparkMax(motor1CANId, MotorType.kBrushless);
 

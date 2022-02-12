@@ -30,6 +30,10 @@ public class FeederSubsystem extends SubsystemBase {
   public void moveBallToPrechamberFromIntake() {
     if(getBallInPreChamber(true)){
       preChamberMotor.set(0);
+    }else if(getBallInChamber(false)){
+      preChamberMotor.set(power);
+      moveBallToChamber();
+      setBallInChamber(true);
     }else{
       preChamberMotor.set(power);
       setBallInPreChamber(true);
