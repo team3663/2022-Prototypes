@@ -6,9 +6,11 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.ClimberSubsytem;
 
 import static frc.robot.Constants.*;
-import frc.robot.subsystems.FeederSubsystem;
+
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -17,21 +19,17 @@ import frc.robot.subsystems.FeederSubsystem;
  */
 public class RobotContainer {
 
-  private final XboxController controller;
+  //
+  private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
 
   // Subsystems
-  private final FeederSubsystem feeder;
-  
+  private final ClimberSubsytem climber = new ClimberSubsytem(CLIMBER_1_CAN_ID, CLIMBER_2_CAN_ID, CLIMBER_3_CAN_ID, CLIMBER_4_CAN_ID);
+
   // Commands
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
-    controller = new XboxController(DRIVE_CONTROLLER_ID);
-
-    feeder = new FeederSubsystem(FEEDER_MOTOR_1_CAN_ID, FEEDER_MOTOR_2_CAN_ID);
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -43,10 +41,16 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> feeder.moveBallToPrechamberFromIntake(), feeder));
-    new JoystickButton(controller, Button.kB.value).whenPressed(new InstantCommand(() -> feeder.moveBallToChamber(), feeder));
-    new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> feeder.moveBallToPrechamberFromChamber(), feeder));
-    new JoystickButton(controller, Button.kY.value).whenPressed(new InstantCommand(() -> feeder.moveBallToIntake(), feeder));
+    new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmill(), climber));
+    new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmillInverse(), climber));
+
+    new JoystickButton(controller, Button.kStart.value).whenPressed(new InstantCommand(() -> climber.stop(), climber));
+    new JoystickButton(controller, Button.kBack.value).whenPressed(new InstantCommand(() -> climber.stopHook(), climber));
+
+    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook1In(), climber));
+    new JoystickButton(controller, Button.kB.value).whenPressed(new InstantCommand(() -> climber.spinHook1Out(), climber));
+    new JoystickButton(controller, Button.kY.value).whenPressed(new InstantCommand(() -> climber.spinHook2In(), climber));
+    new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> climber.spinHook2Out(), climber));
   }
 
   /**
