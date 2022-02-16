@@ -13,9 +13,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax shooterMotor1;
   private CANSparkMax shooterMotor2;
-  //private
-  private MotorControllerGroup motorGroup;
-  private RelativeEncoder encoder1;
+  private CANSparkMax hoodMotor;
+  private MotorControllerGroup shooterMotorGroup ;
+  private RelativeEncoder hoodEncoder;
   private boolean running = false;
   private double power = 0.0;
 
@@ -24,12 +24,27 @@ public class ShooterSubsystem extends SubsystemBase {
   private NetworkTableEntry powerEntry;
   private NetworkTableEntry rpmEntry;
 
-   static final double powerIncrement = 0.05; 
+  static final double powerIncrement = 0.05; 
+
+  //THESE NUMBERS ARE ALL COMPLETELY OFF
+  private final int[][] KNOWN_POINTS = new int[][] { 
+    { 3490, 64, 5 }, 
+    { 3400, 47, 10 }, 
+    { 3730, 35, 15 },
+    { 3900, 30, 18 }, 
+    { 4090, 27, 20 }, 
+    { 4100, 23, 23 },
+    { 4390, 21, 25 } 
+  };
+
+  private final int RPM_COLUMN = 0; // column index for RPM values
+  private final int ANGLE_COLUMN = 1; // column index for angle values
+  private final int DISTANCE_COLUMN = 2; // column index for distance values
 
   /** Creates a new instance of the Shooter subsystem. */
   public ShooterSubsystem(int motor1CANId, int motor2CANId) {
 
-    motor1 = new CANSparkMax(motor1CANId, MotorType.kBrushless);
+    shooterMotor1 = new CANSparkMax(motor1CANId, MotorType.kBrushless);
     motor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
     motorGroup = new MotorControllerGroup(motor1, motor2);
     encoder1 = motor1.getEncoder();
