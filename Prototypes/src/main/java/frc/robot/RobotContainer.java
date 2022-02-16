@@ -46,7 +46,6 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> shooter.stop(), shooter));
     new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> shooter.decreasePower(), shooter));
     new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> shooter.increasePower(), shooter));
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

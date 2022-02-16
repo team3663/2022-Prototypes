@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem(int motor1CANId, int motor2CANId) {
 
     shooterMotor1 = new CANSparkMax(motor1CANId, MotorType.kBrushless);
-    motor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
+    shooterMotor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
     motorGroup = new MotorControllerGroup(motor1, motor2);
     encoder1 = motor1.getEncoder();
 
