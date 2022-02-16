@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -15,13 +16,19 @@ public class IntakeSubsystem extends SubsystemBase {
   private double power = 0.4;
   final DoubleSolenoid intakeSolenoid;
   private boolean isOut;
+  private final int MOTOR_CURRENT_LIMIT = 25;
 
   /** Creates a new instance of the Shooter subsystem. */
   public IntakeSubsystem(int motor1CANId, int motor2CANId) {
 
     intakeMotor = new CANSparkMax(motor1CANId, MotorType.kBrushless);
 
+    intakeMotor.setIdleMode(IdleMode.kCoast);
+    intakeMotor.setSmartCurrentLimit(MOTOR_CURRENT_LIMIT);
+
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.SOLONOID_INWARD_CAN_ID, Constants.SOLONOID_OUTWARD_CAN_ID);
+
+
 
     //intakeMotor.setInverted(true); // ------------------- might need this find out later
   }
@@ -37,25 +44,25 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void stop() {
-    pneumaticsIn();
+    retract();
     intakeMotor.set(0.0);
   }
 
-  public void pneumaticsOut(){
+  public void extend(){
     intakeSolenoid.set(Value.kForward);
     isOut = true;
   }
 
-  public void pneumaticsIn(){
+  public void retract(){
     intakeSolenoid.set(Value.kReverse);
     isOut = false;
   }
 
-  public void takeBallIn(){
+  public void spinBallIn(){
     intakeMotor.set(power);
   }
 
-  public void pushBallOut(){
+  public void spinBallOut(){
     intakeMotor.set(-power);
   }
 }

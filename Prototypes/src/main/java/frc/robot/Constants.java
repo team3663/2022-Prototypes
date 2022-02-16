@@ -18,4 +18,6 @@ public final class Constants {
     // CAN IDs for our motor controllers
     public static final int SHOOTER_1_CAN_ID = 1;
     public static final int SHOOTER_2_CAN_ID = 2;
+    public static final int SOLONOID_INWARD_CAN_ID = 0;
+    public static final int SOLONOID_OUTWARD_CAN_ID = 0;
 }
