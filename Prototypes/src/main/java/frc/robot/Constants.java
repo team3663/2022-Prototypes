@@ -15,7 +15,8 @@ public final class Constants {
     public static final int OPERATOR_CONTROLLER_ID = 1;
     public static final int TEST_CONTROLLER_ID = 2;
 
-    // CAN IDs for our motor controllers
-    public static final int SHOOTER_1_CAN_ID = 1;
-    public static final int SHOOTER_2_CAN_ID = 2;
+    public static final int SHOOTER_MOTOR_1_CAN_ID = 32;
+    public static final int SHOOTER_MOTOR_2_CAN_ID = 32;
+    public static final int HOOD_MOTOR_1_CAN_ID = 32;
+    public static final int HOOD_LIMITSWITCH_CAN_ID = 32;
 }
