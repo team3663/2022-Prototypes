@@ -2,10 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
 
@@ -18,7 +15,7 @@ import static frc.robot.Constants.*;
  */
 public class RobotContainer {
 
-  //
+  @SuppressWarnings("unused")
   private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
 
   // Subsystems
