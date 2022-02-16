@@ -11,9 +11,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ShooterSubsystem extends SubsystemBase {
-
-  private CANSparkMax motor1;
-  private CANSparkMax motor2;
+  private CANSparkMax shooterMotor1;
+  private CANSparkMax shooterMotor2;
+  //private
   private MotorControllerGroup motorGroup;
   private RelativeEncoder encoder1;
   private boolean running = false;
@@ -38,21 +38,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // invert one of them to fix this and initialize power to zero.
     motor1.setInverted(true);
     motorGroup.set(power);
-
-    // Setup the Shuffleboard widgets to dislay info about the state of the shooter.
-    ShuffleboardTab shooterTab = Shuffleboard.getTab("Shooter");
-    runningEntry = shooterTab.add("Running", false)
-      .withPosition(0, 0)
-      .withSize(1, 1)
-      .getEntry();
-    powerEntry = shooterTab.add("Current Power", 0.0)
-      .withPosition(1, 0)
-      .withSize(1, 1)
-      .getEntry();
-    rpmEntry = shooterTab.add("Current RPM", 0.0)
-      .withPosition(2, 0)
-      .withSize(1, 1)
-      .getEntry();
   }
 
   @Override
