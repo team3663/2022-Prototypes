@@ -13,11 +13,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class ShooterSubsystem extends SubsystemBase {
 
   private CANSparkMax motor1;
-  private CANSparkMax motor2;
+  //private CANSparkMax motor2;
   private MotorControllerGroup motorGroup;
   private RelativeEncoder encoder1;
   private boolean running = false;
-  private double power = 0.0;
+  private double power = 0.5;
 
   //Network tables for Shuffleboard telemetry
   private NetworkTableEntry runningEntry;
@@ -30,8 +30,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem(int motor1CANId, int motor2CANId) {
 
     motor1 = new CANSparkMax(motor1CANId, MotorType.kBrushless);
-    motor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
-    motorGroup = new MotorControllerGroup(motor1, motor2);
+    //motor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
+    motorGroup = new MotorControllerGroup(motor1);
     encoder1 = motor1.getEncoder();
 
     // The motors in the shooter run in opposition to each other by default
