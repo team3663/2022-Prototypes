@@ -87,9 +87,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void decreasePower() {
     power -= powerIncrement;
-    if (power < 0.0) {
-      power = 0.0;
-    }
+    // if (power < 0.0) {
+    //   power = 0.0;
+    // }
 
     if (running) {
       motorGroup.set(power);

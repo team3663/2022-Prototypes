@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
 
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem.FeedMode;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,10 +22,11 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RobotContainer {
 
   //
-  private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
+  private final XboxController driveController = new XboxController(DRIVE_CONTROLLER_PORT);
 
   // Subsystems
-  private final ShooterSubsystem shooter = new ShooterSubsystem(SHOOTER_1_CAN_ID, SHOOTER_2_CAN_ID);
+  private final ShooterSubsystem shooter = new ShooterSubsystem(SHOOTER_MOTOR_1_CAN_ID, SHOOTER_MOTOR_2_CAN_ID);
+  private final FeederSubsystem feeder = new FeederSubsystem(FEEDER_MOTOR_CAN_ID, FEEDER_ENTRY_SENSOR_DIO, FEEDER_EXIT_SENSOR_DIO);
 
   // Commands
 
@@ -42,10 +45,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> shooter.start(), shooter));
-    new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> shooter.stop(), shooter));
-    new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> shooter.decreasePower(), shooter));
-    new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> shooter.increasePower(), shooter));
+    new JoystickButton(driveController, Button.kStart.value)
+      .whenPressed(new InstantCommand(() -> shooter.start(), shooter));
+  new JoystickButton(driveController, Button.kBack.value)
+      .whenPressed(new InstantCommand(() -> shooter.stop(), shooter));
+  new JoystickButton(driveController, Button.kLeftBumper.value)
+      .whenPressed(new InstantCommand(() -> shooter.decreasePower(), shooter));
+  new JoystickButton(driveController, Button.kRightBumper.value)
+      .whenPressed(new InstantCommand(() -> shooter.increasePower(), shooter));
+
+      new JoystickButton(driveController, Button.kX.value)
+      .whenPressed(new InstantCommand(() -> feeder.setFeedMode(FeedMode.STOPPED), feeder));
+  new JoystickButton(driveController, Button.kY.value)
+      .whenPressed(new InstantCommand(() -> feeder.setFeedMode(FeedMode.CONTINUOUS), feeder));
   }
 
   /**
