@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -18,6 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private RelativeEncoder encoder1;
   private boolean running = false;
   private double power = 0.5;
+  private DigitalInput hoodLimit;
 
   //Network tables for Shuffleboard telemetry
   private NetworkTableEntry runningEntry;
