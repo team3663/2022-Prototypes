@@ -2,12 +2,22 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  private DigitalInput input;
 
+  /** Creates a new ExampleSubsystem. */
+  public ExampleSubsystem() {
+    input = new DigitalInput(3);
+    System.out.println("ExampleSubsystem started");
+  }
+  
+  public boolean switchPressed() {
+    return input.get();
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -19,5 +29,8 @@ public class ExampleSubsystem extends SubsystemBase {
   }
 
   // Dummy method
-  public void doSomething() {}
+  public void doSomething() {
+    System.out.print("doSomething() ");
+    System.out.println("switch pressed: " + switchPressed());
+  }
 }
