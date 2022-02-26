@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
 
+import frc.robot.commands.C_DoSomethingUntilSwitchPressed;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 
@@ -30,17 +31,23 @@ public class RobotContainer {
 
   // Commands
   private final ExampleCommand m_exampleCommand;
-
+  private final C_DoSomethingUntilSwitchPressed m_doSomethingCommand;
   // private DigitalInput input = new DigitalInput(3);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_subsystem = new ExampleSubsystem();
     m_exampleCommand = new ExampleCommand(m_subsystem);
+    m_doSomethingCommand = new C_DoSomethingUntilSwitchPressed(m_subsystem);
+
     m_subsystem.setDefaultCommand(m_exampleCommand);
     
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  public void createCommands() {
+
   }
 
   /**
@@ -53,9 +60,8 @@ public class RobotContainer {
 
     // Bind an InstantCommand that calls the doSomething method of our subsystem when button A is pressed.
     new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> m_subsystem.doSomething(), m_subsystem));
-    // new JoystickButton(controller, Button.kA.value).whenPressed(
-    //         m_exampleCommand(m_subsystem)
-    //     );
+    new JoystickButton(controller, Button.kB.value).whenPressed(m_doSomethingCommand);
+    
   }
 
   /**
