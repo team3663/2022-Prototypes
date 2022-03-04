@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -12,58 +11,51 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static frc.robot.Constants.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Supplier;
+
 import frc.robot.commands.BlinkyCommand;
 import frc.robot.subsystems.LEDSubsystem;
 
 /**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared.
  */
 public class RobotContainer {
 
   // Misc
   private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
-  private SendableChooser<Integer> chooser = new SendableChooser<Integer>();
 
   // Subsystems
   private final LEDSubsystem ledSubsystem = new LEDSubsystem();
 
   // Commands
 
+  // Autonomous command creation
+  private final HashMap<String, Supplier<Command>> commandCreators = new HashMap<String, Supplier<Command>>();
+  private SendableChooser<Supplier<Command>> chooser = new SendableChooser<Supplier<Command>>();
+
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-
-    chooser.setDefaultOption("Blink 0", 0);
-    chooser.addOption("Blink 1", 1);
-    chooser.addOption("Blink 2", 2);
-
-    Shuffleboard.getTab("Main")
-        .add("Auto Scenario", chooser)
-        .withPosition(0, 1)
-        .withSize(2, 1)
-        .withWidget(BuiltInWidgets.kComboBoxChooser);
-
-    // Configure the button bindings
+    createCommands();
     configureButtonBindings();
+    setupCommandChooser();  
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
+  private void createCommands() {
+    // Register a creator for our autonomous commands
+    registerAutoCommand("Do Nothing", this::createNullCommand);
+    registerAutoCommand("blink 0", this::createBlink0);
+    registerAutoCommand("blink 1", this::createBlink1);
+    registerAutoCommand("blink 2", this::createBlink2);
 
+  }
+
+  private void configureButtonBindings() {
     new JoystickButton(controller, Button.kA.value)
         .whenPressed(new InstantCommand(() -> ledSubsystem.set(0, !ledSubsystem.get(0))));
     new JoystickButton(controller, Button.kB.value)
@@ -74,7 +66,6 @@ public class RobotContainer {
         .whenPressed(new InstantCommand(() -> ledSubsystem.set(3, !ledSubsystem.get(3))));
 
     new JoystickButton(controller, Button.kLeftBumper.value).whenHeld(new BlinkyCommand(ledSubsystem, 3));
-
   }
 
   /**
@@ -83,23 +74,39 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    Supplier<Command> creator = chooser.getSelected();
+    return creator.get();
+  }
 
-    int scenario = chooser.getSelected();
-    Command cmd = null;
 
-    switch (scenario) {
-      case 0:
-        cmd = createBlink0();
-        break;
-      case 1:
-        cmd = createBlink1();
-        break;
-      case 2:
-        cmd = createBlink2();
-        break;
+  private void registerAutoCommand(String name, Supplier<Command> creator) {
+    commandCreators.put(name, creator);
+  }
+
+  /**
+   * Setup our autonomous command chooser in the Shuffleboard
+   */
+  private void setupCommandChooser() {
+    List<String> keys = new ArrayList<String>(commandCreators.keySet());
+    keys.sort((a,b) -> a.compareTo(b));
+    
+    for (String key : keys) {
+        chooser.addOption(key, commandCreators.get(key));
     }
 
-    return cmd;
+    Shuffleboard.getTab("Main")
+        .add("Auto Command", chooser)
+        .withPosition(0, 1)
+        .withSize(2, 1)
+        .withWidget(BuiltInWidgets.kComboBoxChooser);
+  }
+
+  //---------------------------------------------------------------------------
+  // Autonomous command creators
+  //---------------------------------------------------------------------------
+
+  private Command createNullCommand() {
+    return null;
   }
 
   private Command createBlink0() {
