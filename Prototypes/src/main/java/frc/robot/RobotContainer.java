@@ -6,10 +6,9 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 import static frc.robot.Constants.*;
-
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RumbleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -21,16 +20,18 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class RobotContainer {
 
   //
-  private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
+  private final XboxController driverController = new XboxController(DRIVE_CONTROLLER_ID);
 
   // Subsystems
   private final ExampleSubsystem mySubsystem = new ExampleSubsystem();
 
   // Commands
-  private final ExampleCommand autoCmd = new ExampleCommand(mySubsystem);
+  private final ExampleCommand autoCmd = new ExampleCommand(mySubsystem, driverController);
+  private final RumbleCommand rumble;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    rumble = new RumbleCommand(driverController, 0.5, 1.0);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -44,7 +45,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Bind an InstantCommand that calls the doSomething method of our subsystem when button A is pressed.
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> mySubsystem.doSomething(), mySubsystem));
+    new JoystickButton(driverController, Button.kA.value).whenActive(new InstantCommand(() -> mySubsystem.doSomething(), mySubsystem));
+    // new JoystickButton(controller, Button.kA.value).whenActive(autoCmd);
+    new JoystickButton(driverController, Button.kB.value).whenActive(rumble);
+    
   }
 
   /**

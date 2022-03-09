@@ -2,29 +2,37 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import edu.wpi.first.wpilibj.XboxController;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ExampleSubsystem;
 
-/** An example command that uses an example subsystem. */
 public class ExampleCommand extends CommandBase {
-  @SuppressWarnings("unused")
+  // @SuppressWarnings("unused")
   private final ExampleSubsystem m_subsystem;
-
+  @SuppressWarnings("unused")
+  private final XboxController m_controller;  
+  
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
+  public ExampleCommand(ExampleSubsystem subsystem, XboxController controller) {
     m_subsystem = subsystem;
+    this.m_controller = controller;
+  
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("ExampleCommand initialized.");
+    
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -32,7 +40,9 @@ public class ExampleCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Examplecommand ended.");
+  }
 
   // Returns true when the command should end.
   @Override
