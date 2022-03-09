@@ -31,7 +31,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    rumble = new RumbleCommand(driverController, 0.5, 1.0);
+    rumble = new RumbleCommand(driverController);
     // Configure the button bindings
     configureButtonBindings();
   }
