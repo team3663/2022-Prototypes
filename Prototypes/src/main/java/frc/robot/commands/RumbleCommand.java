@@ -23,6 +23,11 @@ public class RumbleCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
+  public RumbleCommand(XboxController controller) {
+    // default values for seconds and intensity
+    this(controller, 0.3, 1.0);
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
