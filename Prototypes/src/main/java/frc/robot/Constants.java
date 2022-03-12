@@ -16,8 +16,10 @@ public final class Constants {
     public static final int TEST_CONTROLLER_ID = 2;
 
     // CAN IDs for our motor controlle
-    public static final int CLIMBER_1_CAN_ID = 17;
-    public static final int CLIMBER_2_CAN_ID = 22;
-    public static final int CLIMBER_3_CAN_ID = 16;
+    public static final int CLIMBER_1_CAN_ID = 14;
+    public static final int CLIMBER_2_CAN_ID = 13;
+    public static final int CLIMBER_3_CAN_ID = 2;
+
     public static final int CLIMBER_4_CAN_ID = 23;
+    public static final int CLIMBER_5_CAN_ID = 16;
 }

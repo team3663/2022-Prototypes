@@ -23,7 +23,7 @@ public class RobotContainer {
   private final XboxController controller = new XboxController(DRIVE_CONTROLLER_ID);
 
   // Subsystems
-  private final ClimberSubsytem climber = new ClimberSubsytem(CLIMBER_1_CAN_ID, CLIMBER_2_CAN_ID, CLIMBER_3_CAN_ID, CLIMBER_4_CAN_ID);
+  private final ClimberSubsytem climber = new ClimberSubsytem(CLIMBER_1_CAN_ID, CLIMBER_2_CAN_ID, CLIMBER_3_CAN_ID, CLIMBER_4_CAN_ID, CLIMBER_5_CAN_ID);
 
   // Commands
 
@@ -43,9 +43,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmill(), climber));
     new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmillInverse(), climber));
+    new JoystickButton(controller, Button.kBack.value).whenPressed(new InstantCommand(() -> climber.elevatorUp(), climber));
+    // new JoystickButton(controller, Button.kX.value).whenHeld(new InstantCommand(() -> climber.elevatorDown(), climber));
 
     new JoystickButton(controller, Button.kStart.value).whenPressed(new InstantCommand(() -> climber.stop(), climber));
-    new JoystickButton(controller, Button.kBack.value).whenPressed(new InstantCommand(() -> climber.stopHook(), climber));
+    // new JoystickButton(controller, Button.kBack.value).whenPressed(new InstantCommand(() -> climber.stopHook(), climber));
 
     new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook1In(), climber));
     new JoystickButton(controller, Button.kB.value).whenPressed(new InstantCommand(() -> climber.spinHook1Out(), climber));
