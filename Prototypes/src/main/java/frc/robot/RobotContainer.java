@@ -41,16 +41,24 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller, Button.kLeftBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmill(), climber));
-    new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(() -> climber.spinWindmillInverse(), climber));
+    new JoystickButton(controller, Button.kLeftBumper.value)
+          .whenPressed(new InstantCommand(() -> climber.spinWindmill(), climber));
+    new JoystickButton(controller, Button.kRightBumper.value)
+          .whenPressed(new InstantCommand(() -> climber.spinWindmillInverse(), climber));
 
-    new JoystickButton(controller, Button.kStart.value).whenPressed(new InstantCommand(() -> climber.stop(), climber));
-    new JoystickButton(controller, Button.kBack.value).whenPressed(new InstantCommand(() -> climber.stopHook(), climber));
+    new JoystickButton(controller, Button.kStart.value)
+          .whenPressed(new InstantCommand(() -> climber.stop(), climber));
+    new JoystickButton(controller, Button.kBack.value)
+          .whenPressed(new InstantCommand(() -> climber.stopHook(), climber));
 
-    new JoystickButton(controller, Button.kA.value).whenPressed(new InstantCommand(() -> climber.spinHook1In(), climber));
-    new JoystickButton(controller, Button.kB.value).whenPressed(new InstantCommand(() -> climber.spinHook1Out(), climber));
-    new JoystickButton(controller, Button.kY.value).whenPressed(new InstantCommand(() -> climber.spinHook2In(), climber));
-    new JoystickButton(controller, Button.kX.value).whenPressed(new InstantCommand(() -> climber.spinHook2Out(), climber));
+    new JoystickButton(controller, Button.kA.value)
+          .whenPressed(new InstantCommand(() -> climber.spinHook1In(), climber));
+    new JoystickButton(controller, Button.kB.value)
+          .whenPressed(new InstantCommand(() -> climber.spinHook1Out(), climber));
+    new JoystickButton(controller, Button.kY.value)
+          .whenPressed(new InstantCommand(() -> climber.spinHook2In(), climber));
+    new JoystickButton(controller, Button.kX.value)
+          .whenPressed(new InstantCommand(() -> climber.spinHook2Out(), climber));
   }
 
   /**

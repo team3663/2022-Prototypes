@@ -14,9 +14,29 @@ public class ClimberSubsytem extends SubsystemBase {
   private CANSparkMax hookMotor2;
   private MotorControllerGroup motorGroup;
 
+  private enum MotorState {
+    STOPPED,
+    RUNNING,
+    STOPPING
+  }
+ 
+  private enum WindmillState {
+    STOPPED,
+    ROTATING_FORWARD,
+    ROTATING_BACKWARD
+  }
+
+  private enum ClawState {
+    STOPPED,
+    ROTATING_FORWARD,
+    ROTATING_BACKWARD
+  }
+
   /** Creates a new instance of the Shooter subsystem. */
   public ClimberSubsytem(int motor1CANId, int motor2CANId, int hookMotor1CANId, int hookMotor2CANId) {
 
+
+  
     motor1 = new CANSparkMax(motor1CANId, MotorType.kBrushless);
     motor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
     hookMotor1 = new CANSparkMax(hookMotor1CANId, MotorType.kBrushless);
