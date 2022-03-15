@@ -49,6 +49,7 @@ public class RobotContainer {
     createCommands();
     configureButtonBindings();
     setupCommandChooser();  
+    
   }
 
   private void createSubsystems() {
@@ -63,15 +64,18 @@ public class RobotContainer {
     registerAutoCommand("blink 0", this::createBlink0);
     registerAutoCommand("blink 1", this::createBlink1);
     registerAutoCommand("blink 2", this::createBlink2);
-
   }
 
   private void configureButtonBindings() {
     new JoystickButton(controller, Button.kA.value)
         // .whenPressed(new InstantCommand(() -> ledSubsystem.set(0, !ledSubsystem.get(0))));
-        .whenPressed(new InstantCommand(() -> m_subsystem.setPower(0.3)));
+        // .whenPressed(new InstantCommand(() -> m_subsystem.setPower(0.03)));
+        // .whenPressed(new InstantCommand(() -> m_subsystem.powerDown()));
+        .whenPressed(new InstantCommand(() -> m_subsystem.speedDown()));
     new JoystickButton(controller, Button.kB.value)
-        .whenPressed(new InstantCommand(() -> ledSubsystem.set(1, !ledSubsystem.get(1))));
+        // .whenPressed(new InstantCommand(() -> ledSubsystem.set(1, !ledSubsystem.get(1))));
+        // .whenPressed(new InstantCommand(() -> m_subsystem.powerUp()));
+        .whenPressed(new InstantCommand(() -> m_subsystem.speedUp()));
     new JoystickButton(controller, Button.kX.value)
         .whenPressed(new InstantCommand(() -> ledSubsystem.set(2, !ledSubsystem.get(2))));
     new JoystickButton(controller, Button.kY.value)
