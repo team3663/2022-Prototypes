@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,15 +18,18 @@ public class ClimberSubsytem extends SubsystemBase {
   private CANSparkMax elevator;
   private MotorControllerGroup motorGroup;
 
+  private DigitalInput limit;
+
 
   /** Creates a new instance of the Shooter subsystem. */
-  public ClimberSubsytem(int motor1CANId, int motor2CANId, int elevatorMotor, int hookMotor1CANId, int hookMotor2CANId) {
+  public ClimberSubsytem(int motor1CANId, int motor2CANId, int elevatorMotor, int hookMotor1CANId, int hookMotor2CANId, int limitid) {
 
     motor1 = new CANSparkMax(motor1CANId, MotorType.kBrushless);
     motor2 = new CANSparkMax(motor2CANId, MotorType.kBrushless);
     elevator = new CANSparkMax(elevatorMotor, MotorType.kBrushless);
     hookMotor1 = new CANSparkMax(hookMotor1CANId, MotorType.kBrushless);
     hookMotor2 = new CANSparkMax(hookMotor2CANId, MotorType.kBrushless);
+    limit = new DigitalInput(limitid);
 
     motorGroup = new MotorControllerGroup(motor1, motor2);
 
@@ -47,11 +51,16 @@ public class ClimberSubsytem extends SubsystemBase {
   }
 
   public void elevatorUp(){
-    elevator.set(-0.2);
+    System.out.println(limit.get());
+    elevator.set(-0.1);
   }
 
   public void elevatorDown(){
-    elevator.set(0.2);
+    elevator.set(0.1);
+    System.out.println(limit.get());
+    if(limit.get()){
+      elevator.set(0);
+    }
   }
   public void stopHook(){
     hookMotor1.set(0.0);
