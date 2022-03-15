@@ -16,6 +16,7 @@ public final class Constants {
     public static final int TEST_CONTROLLER_ID = 2;
 
     // CAN IDs for our motor controllers
+    public static final int MOTOR_CAN_ID = 20;
     public static final int MOTOR_A_CAN_ID = 1;
     public static final int MOTOR_B_CAN_ID = 2;
 }

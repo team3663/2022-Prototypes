@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import frc.robot.commands.BlinkyCommand;
+import frc.robot.commands.OneMotorCommand;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.OneMotorSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.
@@ -29,8 +31,10 @@ public class RobotContainer {
 
   // Subsystems
   private final LEDSubsystem ledSubsystem = new LEDSubsystem();
+  private OneMotorSubsystem m_subsystem; 
 
   // Commands
+  OneMotorCommand moveMotor;
 
   // Autonomous command creation
   private final HashMap<String, Supplier<Command>> commandCreators = new HashMap<String, Supplier<Command>>();
@@ -41,12 +45,19 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    createSubsystems(); // Create our subsystems.
     createCommands();
     configureButtonBindings();
     setupCommandChooser();  
   }
 
+  private void createSubsystems() {
+    m_subsystem = new OneMotorSubsystem(MOTOR_CAN_ID);
+  }
+
   private void createCommands() {
+    moveMotor = new OneMotorCommand(m_subsystem, () -> controller.getLeftX());
+
     // Register a creator for our autonomous commands
     registerAutoCommand("Do Nothing", this::createNullCommand);
     registerAutoCommand("blink 0", this::createBlink0);
@@ -57,7 +68,8 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(controller, Button.kA.value)
-        .whenPressed(new InstantCommand(() -> ledSubsystem.set(0, !ledSubsystem.get(0))));
+        // .whenPressed(new InstantCommand(() -> ledSubsystem.set(0, !ledSubsystem.get(0))));
+        .whenPressed(new InstantCommand(() -> m_subsystem.setPower(0.3)));
     new JoystickButton(controller, Button.kB.value)
         .whenPressed(new InstantCommand(() -> ledSubsystem.set(1, !ledSubsystem.get(1))));
     new JoystickButton(controller, Button.kX.value)
@@ -66,6 +78,8 @@ public class RobotContainer {
         .whenPressed(new InstantCommand(() -> ledSubsystem.set(3, !ledSubsystem.get(3))));
 
     new JoystickButton(controller, Button.kLeftBumper.value).whenHeld(new BlinkyCommand(ledSubsystem, 3));
+
+    
   }
 
   /**
@@ -77,7 +91,6 @@ public class RobotContainer {
     Supplier<Command> creator = chooser.getSelected();
     return creator.get();
   }
-
 
   private void registerAutoCommand(String name, Supplier<Command> creator) {
     commandCreators.put(name, creator);
